@@ -1,0 +1,422 @@
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--ink:#111;--cream:#f5f0e8;--mid:#c9b99a;--card:#fff;--muted:#777;--border:#ddd6c8;}
+body{font-family:var(--font-sans);background:var(--cream);color:var(--ink);}
+
+.site-wrap{min-height:100vh;}
+
+/* ── HERO ── */
+.hero{background:var(--ink);color:var(--cream);padding:4rem 2rem 5rem;text-align:center;position:relative;overflow:hidden;perspective:800px;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,240,232,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,240,232,.04) 1px,transparent 1px);background-size:48px 48px;}
+.case-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(245,240,232,.1);border:0.5px solid rgba(245,240,232,.2);border-radius:20px;padding:5px 14px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;position:relative;}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:#4caf50;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:500;line-height:1.15;position:relative;margin-bottom:.75rem;}
+.hero h1 em{color:var(--mid);font-style:normal;}
+.hero-sub{font-size:.9rem;color:#999;position:relative;margin-bottom:2.5rem;}
+.module-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;position:relative;}
+.module-pill{background:rgba(245,240,232,.08);border:0.5px solid rgba(245,240,232,.2);border-radius:6px;padding:5px 14px;font-size:12px;color:#ccc;cursor:pointer;transition:all .25s;}
+.module-pill:hover,.module-pill.active{background:var(--cream);color:var(--ink);border-color:var(--cream);}
+
+/* ── NAV ── */
+.sticky-nav{background:rgba(17,17,17,.97);border-bottom:0.5px solid #333;padding:0 1.5rem;display:flex;gap:0;overflow-x:auto;}
+.snav-item{color:#888;font-size:13px;padding:.85rem 1.2rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;}
+.snav-item.active{color:var(--cream);border-bottom-color:var(--cream);}
+.snav-item:hover:not(.active){color:#ccc;}
+
+/* ── MAIN CONTENT ── */
+.main{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem;}
+
+/* ── SECTION PANEL ── */
+.section-panel{display:none;animation:rise .4s cubic-bezier(.34,1.56,.64,1);}
+.section-panel.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(20px) rotateX(5deg)}to{opacity:1;transform:none}}
+
+.sec-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+.sec-title{font-size:1.4rem;font-weight:500;color:var(--ink);margin-bottom:.4rem;}
+.sec-desc{font-size:.9rem;color:var(--muted);line-height:1.65;margin-bottom:2rem;}
+
+/* ── FEATURE CARDS ── */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:2rem;}
+.feat-card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;cursor:default;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s;transform-style:preserve-3d;}
+.feat-card:hover{transform:translateY(-6px) rotateX(8deg) rotateY(-2deg);box-shadow:0 16px 40px rgba(0,0,0,.1);}
+.feat-icon{width:36px;height:36px;background:var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;}
+.feat-icon svg{width:18px;height:18px;stroke:var(--cream);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.feat-card h3{font-size:14px;font-weight:500;margin-bottom:.4rem;}
+.feat-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* ── STAT STRIP ── */
+.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:2rem;}
+.stat-box{background:var(--ink);color:var(--cream);border-radius:10px;padding:1.1rem;text-align:center;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+.stat-box:hover{transform:scale(1.06) rotateZ(1deg);}
+.stat-box .sv{font-size:1.6rem;font-weight:500;}
+.stat-box .sl{font-size:10px;color:var(--mid);margin-top:3px;letter-spacing:.06em;text-transform:uppercase;}
+
+/* ── REPORT TABLE ── */
+.report-shell{border-radius:12px;overflow:hidden;border:0.5px solid var(--border);margin-bottom:2rem;}
+.report-head{background:var(--ink);color:var(--cream);display:grid;grid-template-columns:80px 1fr 1fr 70px 90px;padding:.7rem 1rem;font-size:10px;letter-spacing:.1em;text-transform:uppercase;}
+.report-row{display:grid;grid-template-columns:80px 1fr 1fr 70px 90px;padding:.65rem 1rem;font-size:12px;border-bottom:0.5px solid #ede7da;background:var(--card);align-items:center;transition:background .2s,transform .25s;}
+.report-row:last-child{border-bottom:none;}
+.report-row:hover{background:#fdf9f3;transform:translateX(6px);}
+.report-row.re{color:#8b1a1a;background:#fff8f8;}
+.report-row.re:hover{background:#ffe8e8;transform:translateX(6px);}
+.dbadge{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:500;}
+.dc{background:#fde8e8;color:#8b1a1a;}
+.do{background:#e8edf6;color:#1a3a6b;}
+.dn{background:#ede8f6;color:#4a1a8b;}
+.dk{background:#e8f4f0;color:#0a5c3c;}
+
+/* ── FILTER BAR ── */
+.fbar{display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap;}
+.fbar label{font-size:12px;color:var(--muted);}
+.fbar select{padding:5px 10px;border:0.5px solid var(--border);border-radius:8px;background:#fff;font-size:12px;color:var(--ink);}
+
+/* ── BAR CHART ── */
+.chart-card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:1.4rem;margin-bottom:2rem;}
+.chart-card h4{font-size:13px;font-weight:500;margin-bottom:1rem;}
+.bars{display:flex;align-items:flex-end;gap:12px;height:140px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.bar-fill{width:100%;border-radius:4px 4px 0 0;transition:transform .4s cubic-bezier(.34,1.56,.64,1);cursor:default;}
+.bar-fill:hover{transform:scaleY(1.05);transform-origin:bottom;opacity:.8;}
+.bv{font-size:11px;font-weight:500;color:var(--ink);}
+.bl{font-size:10px;color:var(--muted);}
+
+/* ── STORY CARDS ── */
+.story-card{background:var(--card);border:0.5px solid var(--border);border-left:4px solid var(--ink);border-radius:0 12px 12px 0;padding:1.25rem 1.4rem;margin-bottom:1rem;transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.story-card:hover{transform:translateX(8px) rotateY(-2deg);}
+.story-tag{display:inline-block;background:var(--ink);color:var(--cream);font-size:10px;padding:3px 10px;border-radius:10px;margin-bottom:.6rem;letter-spacing:.06em;}
+.story-card h3{font-size:14px;font-weight:500;margin-bottom:.4rem;}
+.story-card p{font-size:12px;color:#555;line-height:1.65;}
+
+/* ── FLOW DIAGRAM ── */
+.flow-row{display:flex;align-items:center;gap:0;margin-bottom:2rem;flex-wrap:wrap;justify-content:center;}
+.flow-step{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:.9rem 1rem;text-align:center;min-width:100px;flex:1;max-width:140px;transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.flow-step:hover{transform:translateY(-6px) rotateX(8deg);box-shadow:0 10px 28px rgba(0,0,0,.1);}
+.flow-step .fs-num{font-size:11px;color:var(--muted);margin-bottom:4px;}
+.flow-step .fs-title{font-size:12px;font-weight:500;}
+.flow-arrow{font-size:18px;color:var(--muted);padding:0 4px;align-self:center;}
+
+/* ── DONUT ── */
+.donut-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:2rem;}
+.donut-card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center;transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.donut-card:hover{transform:scale(1.04) rotateZ(1.5deg);}
+.donut-card svg{overflow:visible;}
+.donut-lbl{font-size:11px;color:var(--muted);margin-top:.5rem;}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--ink);color:#555;text-align:center;font-size:11px;padding:1.2rem;margin-top:0;}
+.site-footer span{color:#888;}
+
+@media(max-width:520px){
+  .report-head,.report-row{grid-template-columns:60px 1fr 70px 80px;}
+  .report-head>:nth-child(3),.report-row>:nth-child(3){display:none;}
+  .donut-row{grid-template-columns:1fr;}
+  .flow-arrow{display:none;}
+}
+</style>
+
+<h2 class="sr-only">MediCare Hospital Patient and Operations Analytics — interactive project explainer covering Reporting, Exploration, Dashboard, and Story Making modules</h2>
+
+<div class="site-wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="case-pill"><span class="pulse-dot"></span>Case Study 02 — Healthcare</div>
+  <h1>MediCare Hospital<br><em>Patient &amp; Operations Analytics</em></h1>
+  <p class="hero-sub">Industry: Healthcare &nbsp;·&nbsp; BI Project Walkthrough</p>
+  <div class="module-pills">
+    <div class="module-pill active" onclick="goSection('reporting',this)">Reporting</div>
+    <div class="module-pill" onclick="goSection('exploration',this)">Exploration</div>
+    <div class="module-pill" onclick="goSection('dashboard',this)">Dashboard</div>
+    <div class="module-pill" onclick="goSection('story',this)">Story Making</div>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<div class="sticky-nav">
+  <div class="snav-item active" id="sn-reporting" onclick="goSection('reporting',this)">01 — Reporting</div>
+  <div class="snav-item" id="sn-exploration" onclick="goSection('exploration',this)">02 — Exploration</div>
+  <div class="snav-item" id="sn-dashboard" onclick="goSection('dashboard',this)">03 — Dashboard</div>
+  <div class="snav-item" id="sn-story" onclick="goSection('story',this)">04 — Story Making</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ── REPORTING ── -->
+  <div class="section-panel active" id="sec-reporting">
+    <div class="sec-label">Module 01</div>
+    <div class="sec-title">Reporting</div>
+    <div class="sec-desc">A structured list report giving hospital administrators a clear view of every patient encounter — filterable by department, with conditional styling for flagged cases.</div>
+
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg></div>
+        <h3>List report</h3>
+        <p>Patient ID, Department, Doctor Name, Length of Stay, Bill Amount — all in one clean grid.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg></div>
+        <h3>Header &amp; footer</h3>
+        <p>Hospital name + generation date at top. Confidentiality notice and page number at bottom.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div>
+        <h3>Conditional styling</h3>
+        <p>Re-admitted patients highlighted in Dark Red (Calibri 11pt) using conditional formatting rules.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg></div>
+        <h3>Department prompt</h3>
+        <p>An interactive prompt lets users filter the entire report by a single department at run time.</p>
+      </div>
+    </div>
+
+    <div class="fbar">
+      <label>Filter by department:</label>
+      <select onchange="filterReport(this.value)">
+        <option value="all">All departments</option>
+        <option value="Cardiology">Cardiology</option>
+        <option value="Orthopedics">Orthopedics</option>
+        <option value="Neurology">Neurology</option>
+        <option value="Oncology">Oncology</option>
+      </select>
+    </div>
+
+    <div style="background:var(--ink);color:var(--cream);padding:.5rem 1rem;font-size:10px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;letter-spacing:.04em;">
+      <span>MediCare Hospital — Confidential Patient Report</span><span>Generated: Apr 08, 2026</span>
+    </div>
+    <div class="report-shell" style="border-radius:0 0 12px 12px;border-top:none;">
+      <div class="report-head"><span>Patient ID</span><span>Department</span><span>Doctor</span><span>Stay</span><span>Bill (₹)</span></div>
+      <div id="report-body"></div>
+    </div>
+    <div style="background:var(--cream);border:0.5px solid var(--border);border-radius:8px;padding:.5rem 1rem;font-size:10px;color:var(--muted);text-align:center;">Confidential — For Internal Use Only &nbsp;|&nbsp; Page 1 of 1</div>
+  </div>
+
+  <!-- ── EXPLORATION ── -->
+  <div class="section-panel" id="sec-exploration">
+    <div class="sec-label">Module 02</div>
+    <div class="sec-title">Exploration</div>
+    <div class="sec-desc">Drag-and-drop exploration of patient data — cross-tabs, department comparisons, and trend discovery without writing a single query.</div>
+
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
+        <h3>Cross-tab analysis</h3>
+        <p>Pivot any two fields to reveal hidden patterns — e.g. department vs re-admission rate.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Trend exploration</h3>
+        <p>Drag date fields to see admissions trends over weeks, months, or quarters instantly.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+        <h3>Drill-down</h3>
+        <p>Click any bar or data point to drill from department level down to individual patient records.</p>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h4>Average bill amount by department (₹)</h4>
+      <div class="bars" id="explore-bars"></div>
+    </div>
+
+    <div class="donut-row">
+      <div class="donut-card">
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="38" fill="none" stroke="#ede7da" stroke-width="13"/>
+          <circle cx="55" cy="55" r="38" fill="none" stroke="#111" stroke-width="13"
+            stroke-dasharray="95.8 238.76" stroke-dashoffset="59.69" stroke-linecap="round"/>
+          <text x="55" y="60" text-anchor="middle" font-size="16" font-weight="500" fill="#111">40%</text>
+        </svg>
+        <div class="donut-lbl">Re-admission rate</div>
+      </div>
+      <div class="donut-card">
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="38" fill="none" stroke="#ede7da" stroke-width="13"/>
+          <circle cx="55" cy="55" r="38" fill="none" stroke="#111" stroke-width="13"
+            stroke-dasharray="143.26 238.76" stroke-dashoffset="59.69" stroke-linecap="round"/>
+          <text x="55" y="60" text-anchor="middle" font-size="16" font-weight="500" fill="#111">60%</text>
+        </svg>
+        <div class="donut-lbl">Bed occupancy rate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD ── -->
+  <div class="section-panel" id="sec-dashboard">
+    <div class="sec-label">Module 03</div>
+    <div class="sec-title">Dashboard</div>
+    <div class="sec-desc">A real-time operations command centre — KPI tiles, trend charts, and filterable views all on one screen for hospital leadership.</div>
+
+    <div class="stat-strip">
+      <div class="stat-box"><div class="sv">248</div><div class="sl">Total patients</div></div>
+      <div class="stat-box"><div class="sv">5.4d</div><div class="sl">Avg stay</div></div>
+      <div class="stat-box"><div class="sv">₹18.2L</div><div class="sl">Revenue</div></div>
+      <div class="stat-box"><div class="sv">38</div><div class="sl">Re-admissions</div></div>
+    </div>
+
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+        <h3>KPI tiles</h3>
+        <p>Four headline numbers visible at a glance — patients, avg stay, revenue, re-admissions.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="4 19 8 13 12 15 16 9 20 4"/><line x1="4" y1="19" x2="20" y2="19"/></svg></div>
+        <h3>Trend charts</h3>
+        <p>Monthly admission line chart with week-on-week delta badges updating automatically.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Live filters</h3>
+        <p>Department, date range, and doctor slicers update every widget on the page instantly.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>Story page link</h3>
+        <p>One-click navigation from the dashboard to the narrative story page for presentations.</p>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h4>Monthly admissions — Apr 2025 to Apr 2026</h4>
+      <div class="bars" id="dash-bars"></div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-step"><div class="fs-num">Step 1</div><div class="fs-title">Data source connection</div></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><div class="fs-num">Step 2</div><div class="fs-title">KPI calculation</div></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><div class="fs-num">Step 3</div><div class="fs-title">Visual layout</div></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><div class="fs-num">Step 4</div><div class="fs-title">Filter wiring</div></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><div class="fs-num">Step 5</div><div class="fs-title">Publish &amp; share</div></div>
+    </div>
+  </div>
+
+  <!-- ── STORY MAKING ── -->
+  <div class="section-panel" id="sec-story">
+    <div class="sec-label">Module 04</div>
+    <div class="sec-title">Story Making</div>
+    <div class="sec-desc">Data storytelling — guiding stakeholders from raw numbers to clear, actionable insights using a narrative structure with annotated visuals.</div>
+
+    <div class="story-card">
+      <span class="story-tag">Finding 01</span>
+      <h3>Cardiology generates the highest revenue per patient</h3>
+      <p>With an average bill of ₹85,000 and a 7.2-day stay, the Cardiology department outperforms all others by 34%. Complex procedures and longer recovery drives both metrics.</p>
+    </div>
+    <div class="story-card">
+      <span class="story-tag">Finding 02</span>
+      <h3>Re-admissions are concentrated in Oncology</h3>
+      <p>62% of all re-admitted patients belong to the Oncology ward — flagged in dark red across all reports. Targeted post-discharge follow-up protocols could reduce this by an estimated 20%.</p>
+    </div>
+    <div class="story-card">
+      <span class="story-tag">Finding 03</span>
+      <h3>March 2026 saw a 20% admission spike</h3>
+      <p>Seasonal respiratory illnesses combined with a surge in orthopedic referrals pushed admissions to 265 — the highest single month in the dataset. Staffing plans should anticipate this annually.</p>
+    </div>
+    <div class="story-card">
+      <span class="story-tag">Recommendation</span>
+      <h3>Department-level filtering cuts report review time by 60%</h3>
+      <p>Enabling the department prompt in the Reporting module reduces report length significantly for department-specific reviews, saving clinical managers an average of 8 minutes per session.</p>
+    </div>
+
+    <div class="feat-grid" style="margin-top:1.5rem;">
+      <div class="feat-card" style="border-left:3px solid #111;border-radius:0 12px 12px 0;">
+        <h3>Narrative arc</h3>
+        <p>Context → finding → insight → recommendation. Each slide builds on the last.</p>
+      </div>
+      <div class="feat-card" style="border-left:3px solid #111;border-radius:0 12px 12px 0;">
+        <h3>Annotated charts</h3>
+        <p>Callout boxes, reference lines, and data labels guide the viewer's eye to what matters.</p>
+      </div>
+      <div class="feat-card" style="border-left:3px solid #111;border-radius:0 12px 12px 0;">
+        <h3>Executive summary</h3>
+        <p>One-page summary at the front — three findings, three numbers, one recommendation.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.main -->
+
+<div class="site-footer">MediCare Hospital &nbsp;·&nbsp; <span>Case Study 02 — Patient &amp; Operations Analytics</span> &nbsp;·&nbsp; Confidential</div>
+</div><!-- /.site-wrap -->
+
+<script>
+const patients=[
+  {id:'P-1001',dept:'Cardiology',doc:'Dr. Meera Nair',stay:8,bill:85000,re:false},
+  {id:'P-1002',dept:'Orthopedics',doc:'Dr. Rajan Kumar',stay:4,bill:42000,re:false},
+  {id:'P-1003',dept:'Oncology',doc:'Dr. Sita Pillai',stay:12,bill:120000,re:true},
+  {id:'P-1004',dept:'Neurology',doc:'Dr. Arjun Das',stay:6,bill:67000,re:false},
+  {id:'P-1005',dept:'Cardiology',doc:'Dr. Meera Nair',stay:9,bill:91000,re:true},
+  {id:'P-1006',dept:'Orthopedics',doc:'Dr. Kavya Menon',stay:3,bill:38000,re:false},
+  {id:'P-1007',dept:'Oncology',doc:'Dr. Sita Pillai',stay:15,bill:145000,re:true},
+  {id:'P-1008',dept:'Neurology',doc:'Dr. Arjun Das',stay:5,bill:59000,re:false},
+];
+
+const dClass={Cardiology:'dc',Orthopedics:'do',Neurology:'dn',Oncology:'dk'};
+
+function filterReport(val){
+  const rows=val==='all'?patients:patients.filter(p=>p.dept===val);
+  document.getElementById('report-body').innerHTML=rows.map(p=>`
+    <div class="report-row${p.re?' re':''}">
+      <span>${p.id}</span>
+      <span><span class="dbadge ${dClass[p.dept]}">${p.dept}</span></span>
+      <span>${p.doc}</span>
+      <span>${p.stay}d</span>
+      <span>₹${p.bill.toLocaleString('en-IN')}</span>
+    </div>`).join('');
+}
+
+function buildBars(elId,data,colorFn){
+  const max=Math.max(...data.map(d=>d.v));
+  document.getElementById(elId).innerHTML=data.map(d=>{
+    const h=Math.round((d.v/max)*120);
+    return`<div class="bar-col">
+      <div class="bar-fill" style="height:${h}px;background:${colorFn(d)}"></div>
+      <div class="bv">${d.label}</div>
+      <div class="bl">${d.sub}</div>
+    </div>`;
+  }).join('');
+}
+
+function goSection(id,el){
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.snav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.module-pill').forEach(p=>p.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  const sn=document.getElementById('sn-'+id);
+  if(sn)sn.classList.add('active');
+  if(el&&el.classList.contains('module-pill'))el.classList.add('active');
+}
+
+filterReport('all');
+
+buildBars('explore-bars',[
+  {v:88000,label:'₹88k',sub:'Cardiology'},
+  {v:40000,label:'₹40k',sub:'Ortho'},
+  {v:132500,label:'₹133k',sub:'Oncology'},
+  {v:63000,label:'₹63k',sub:'Neurology'},
+],()=>'#111');
+
+buildBars('dash-bars',[
+  {v:186,label:'186',sub:'Jan'},
+  {v:210,label:'210',sub:'Feb'},
+  {v:198,label:'198',sub:'Mar'},
+  {v:225,label:'225',sub:'Apr'},
+  {v:240,label:'240',sub:'May'},
+  {v:218,label:'218',sub:'Jun'},
+  {v:232,label:'232',sub:'Jul'},
+  {v:245,label:'245',sub:'Aug'},
+  {v:220,label:'220',sub:'Sep'},
+  {v:238,label:'238',sub:'Oct'},
+  {v:255,label:'255',sub:'Nov'},
+  {v:265,label:'265',sub:'Dec'},
+],(d,i)=>d.v===265?'#8b1a1a':'#111');
+</script>
